@@ -1141,7 +1141,6 @@ dependencies = [
     { name = "granian" },
     { name = "protobuf" },
     { name = "pydantic-settings" },
-    { name = "python-dotenv" },
     { name = "quart" },
     { name = "requests" },
     { name = "sentencepiece" },
@@ -1153,6 +1152,7 @@ dependencies = [
 dev = [
     { name = "pytest" },
     { name = "pytest-asyncio" },
+    { name = "python-dotenv" },
     { name = "ruff" },
 ]
 
@@ -1164,7 +1164,7 @@ requires-dist = [
     { name = "pydantic-settings" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "pytest-asyncio", marker = "extra == 'dev'" },
-    { name = "python-dotenv" },
+    { name = "python-dotenv", marker = "extra == 'dev'" },
     { name = "quart" },
     { name = "requests" },
     { name = "ruff", marker = "extra == 'dev'" },
