@@ -25,5 +25,4 @@ class PegasusSummarize(Predictor):
             num_beams=Config.num_beams,
             early_stopping=True,
         )
-        import pdb; pdb.set_trace()
         return self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
