@@ -14,15 +14,16 @@ class PegasusSummarize(Predictor):
         if not text:
             raise ValueError("No text to summarize.")
 
-        if len(text) < Config.max_length:
+        if len(text) < Config.max_new_tokens:
             return text
 
         inputs = self.tokenizer(text, truncation=True, padding="longest", return_tensors="pt")
         summary_ids = self.summarizer.generate(
             inputs.input_ids,
-            max_length=Config.max_length,
+            max_new_tokens=Config.max_new_tokens,
             min_length=Config.min_length,
             num_beams=Config.num_beams,
             early_stopping=True,
         )
+        import pdb; pdb.set_trace()
         return self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)

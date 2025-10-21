@@ -13,12 +13,12 @@ class BartSummarize(Predictor):
         if not text:
             raise ValueError("No text to summarize.")
 
-        if len(text) < Config.max_length:
+        if len(text) < Config.max_new_tokens:
             return text
 
         summary = self.summarizer(
             text,
-            max_length=Config.max_length,
+            max_new_tokens=Config.max_new_tokens,
             num_beams=Config.num_beams,
             min_length=Config.min_length,
             early_stopping=True,

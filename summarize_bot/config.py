@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     CACHE_DEFAULT_TIMEOUT: int = 300
     MODEL: Literal["bart", "pegasus", "t5"] = "t5"
 
-    max_length: int = 280
+    max_new_tokens: int = 280
     min_length: int = 80
     num_beams: int = 4
 
