@@ -3,6 +3,7 @@ import pytest
 
 from summarize_bot.bart_summarize import BartSummarize
 from summarize_bot.pegasus_summarize import PegasusSummarize
+from summarize_bot.t5_summarize import T5Summarize
 
 from dotenv import load_dotenv
 
@@ -21,6 +22,11 @@ def bart_model():
 @pytest.fixture(scope="session")
 def pegasus_model():
     yield PegasusSummarize()
+
+
+@pytest.fixture(scope="session")
+def t5_model():
+    yield T5Summarize()
 
 
 @pytest.fixture(scope="session")
