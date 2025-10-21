@@ -18,18 +18,16 @@ dependencies = [
     "Quart",
     "aiohttp",
     "pydantic-settings",
-    "python-dotenv",
     "granian",
     "transformers",
     "torch",
     "protobuf",
-    "python-dotenv",
     "sentencepiece"
 ]
 dynamic = ["version"]
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff", "pytest-asyncio"]
+dev = ["pytest", "ruff", "pytest-asyncio", "python-dotenv"]
 
 [project.urls]
 "Source Code" = "https://github.com/taranis-ai/summarize-bot"
