@@ -14,14 +14,14 @@ class T5Summarize(Predictor):
         if not text:
             raise ValueError("No text to summarize.")
 
-        if len(text) < Config.max_new_tokens:
+        if len(text) < Config.MAX_LEN:
             return text
 
         summary = self.summarizer(
             text,
-            max_new_tokens=Config.max_new_tokens,
-            num_beams=Config.num_beams,
-            min_length=Config.min_length,
+            max_new_tokens=Config.MAX_LEN,
+            num_beams=Config.NUM_BEAMS,
+            min_length=Config.MIN_LEN,
             early_stopping=True,
         )
 

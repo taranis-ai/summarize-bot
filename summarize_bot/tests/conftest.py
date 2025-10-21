@@ -1,7 +1,16 @@
+import os
 import pytest
 
 from summarize_bot.bart_summarize import BartSummarize
 from summarize_bot.pegasus_summarize import PegasusSummarize
+
+from dotenv import load_dotenv
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+env_file = os.path.join(base_dir, ".env.test")
+current_path = os.getcwd()
+
+load_dotenv(dotenv_path=env_file, override=True)
 
 
 @pytest.fixture(scope="session")

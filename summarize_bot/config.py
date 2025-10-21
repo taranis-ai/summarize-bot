@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     CACHE_DEFAULT_TIMEOUT: int = 300
     MODEL: Literal["bart", "pegasus", "t5"] = "t5"
 
-    max_new_tokens: int = 280
-    min_length: int = 80
-    num_beams: int = 4
+    MAX_LEN: int = 280
+    MIN_LEN: int = 80
+    NUM_BEAMS: int = 4
 
     @field_validator("API_KEY", mode="before")
     def check_non_empty_string(cls, v: str, info: ValidationInfo) -> str:
