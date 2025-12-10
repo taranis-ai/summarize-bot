@@ -1,32 +1,12 @@
-from pydantic import field_validator, ValidationInfo
-from pydantic_settings import BaseSettings, SettingsConfigDict
-from datetime import datetime
 from typing import Literal
+from taranis_base_bot.config import CommonSettings
 
 
-class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
-
-    MODULE_ID: str = "SummarizeBot"
-    DEBUG: bool = False
-    API_KEY: str = ""
-
-    COLORED_LOGS: bool = True
-    BUILD_DATE: datetime = datetime.now()
-    GIT_INFO: dict[str, str] | None = None
-    CACHE_TYPE: str = "SimpleCache"
-    CACHE_DEFAULT_TIMEOUT: int = 300
-    MODEL: Literal["bart", "pegasus", "t5"] = "t5"
-
-    MAX_LEN: int = 280
-    MIN_LEN: int = 80
-    NUM_BEAMS: int = 4
-
-    @field_validator("API_KEY", mode="before")
-    def check_non_empty_string(cls, v: str, info: ValidationInfo) -> str:
-        if not isinstance(v, str) or not v.strip():
-            print("API_KEY is not set or empty, disabling API key requirement")
-        return v
+class Settings(CommonSettings):
+    MODEL: Literal["t5", "bart", "pegasus"] = "t5"
+    PACKAGE_NAME: str = "summarize_bot"
+    HF_MODEL_INFO: bool = True
+    PAYLOAD_SCHEMA: dict[str, dict] = {"text": {"type": "str", "required": True}}
 
 
 Config = Settings()
