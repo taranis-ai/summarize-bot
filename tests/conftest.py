@@ -1,9 +1,9 @@
 import os
 import pytest
 
-from summarize_bot.bart_summarize import BartSummarize
-from summarize_bot.pegasus_summarize import PegasusSummarize
-from summarize_bot.t5_summarize import T5Summarize
+from summarize_bot.bart import Bart
+from summarize_bot.pegasus import Pegasus
+from summarize_bot.t5 import T5
 
 from dotenv import load_dotenv
 
