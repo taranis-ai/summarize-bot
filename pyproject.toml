@@ -1,28 +1,20 @@
 [project]
-name = "taranis_summarize_bot"
-description = "Summary Bot for Taranis AI"
+name = "summarize_bot"
+description = "Bot for summarizing stories in Taranis AI"
 readme = "README.md"
 license = {file = "LICENSE.md"}
 maintainers = [{ name = "AIT", email = "benjamin.akhras@ait.ac.at" }]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Security",
 ]
-requires-python = ">=3.12,<3.14"
+requires-python = ">=3.13, <3.14"
 dependencies = [
-    "requests",
-    "Quart",
-    "aiohttp",
-    "pydantic-settings",
-    "granian",
+    "taranis-base-bot",
     "transformers",
-    "torch",
-    "protobuf",
-    "sentencepiece"
+    "torch"
 ]
 dynamic = ["version"]
 
@@ -42,7 +34,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 fallback_version = "0.0.0"
-tag_regex = "^refs/pull/(\\d+)/merge$"
+tag_regex = "^(?:refs/pull/\\d+/merge$|v(?P<version>\\d+\\.\\d+\\.\\d+))$"
 
 [tool.setuptools]
 packages = ["summarize_bot"]
@@ -50,6 +42,9 @@ packages = ["summarize_bot"]
 [tool.ruff]
 line-length = 142
 target-version = "py313"
+
+[tool.ruff.lint]
+ignore = ["E402"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
