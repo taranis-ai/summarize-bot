@@ -14,7 +14,9 @@ requires-python = ">=3.13, <3.14"
 dependencies = [
     "taranis-base-bot",
     "transformers",
-    "torch"
+    "torch",
+    "protobuf",
+    "sentencepiece"
 ]
 dynamic = ["version"]
 
