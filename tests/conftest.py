@@ -16,17 +16,17 @@ load_dotenv(dotenv_path=env_file, override=True)
 
 @pytest.fixture(scope="session")
 def bart_model():
-    yield BartSummarize()
+    yield Bart()
 
 
 @pytest.fixture(scope="session")
 def pegasus_model():
-    yield PegasusSummarize()
+    yield Pegasus()
 
 
 @pytest.fixture(scope="session")
 def t5_model():
-    yield T5Summarize()
+    yield T5()
 
 
 @pytest.fixture(scope="session")
