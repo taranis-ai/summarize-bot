@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: Bot for summarizing stories in Taranis AI
+  description: |
+    Summarizes input text 
+
+    This API supports three different models:
+    - **t5**: Supports German and English
+    - **bart**: English only
+    - **pegasus**: English only
+
+    The model used is determined by the MODEL environment variable at deployment time.
+  version: 0.0.0
+  license:
+    name: EUPL-1.2
+    url: https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12
+  contact:
+    name: AIT
+    email: benjamin.akhras@ait.ac.at
+  x-logo:
+    url: https://github.com/taranis-ai
+
+servers:
+  - url: http://localhost:5500
+    description: Local development server
+  - url: http://localhost:8000
+    description: Docker container server
+
+paths:
+  /:
+    post:
+      summary: Process text for summarization
+      description: |
+        Accepts input text and returns a summarized version using the selected model.
+        **Input**: JSON object with a "text" field containing the text to be summarized.
+        **Output**: JSON object with a "summary" field containing the summarized text.
+      operationId: processText
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessRequest'
+            examples:
+              test:
+                summary: Example text for summarization
+                value:
+                  text: "This is an input text to be summarized"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Response'
+              examples:
+                test:
+                  summary: Example of a valid output
+                  value:
+                    summary: "A short summary"
+        '400':
+          description: Bad request - invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Missing required field: <add required field name>"
+        '422':
+          description: Unprocessable entity - validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Invalid payload schema"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Model inference failed"
+
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the service
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /info:
+    get:
+      summary: Get model information
+      description: Returns information about the currently loaded model
+      operationId: getModelInfo
+      responses:
+        '200':
+          description: Model information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+              example:
+                model_name: "t5"
+                model_version: "0.2.3"
+                languages: ["de", "en", "multilingual"]
+
+components:
+  schemas:
+    ProcessRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: Text to be summarized
+          minLength: 1
+          examples:
+            - "This is an input text to be summarized"
+        max_length:
+          type: integer
+          description: Optional maximum length of the generated summary (in tokens)
+          minimum: 1
+          example: 120
+        min_length:
+          type: integer
+          description: Optional minimum length of the generated summary
+          minimum: 0
+          example: 30
+
+    Response:
+      type: object
+      additionalProperties: false
+      required:
+        - summary
+      properties:
+        summary:
+          type: string
+          description: Summarized text
+          minLength: 0
+          example: "A short summary"
+
+    ModelInfo:
+      type: object
+      additionalProperties: false
+      required:
+        - model_name
+        - languages
+      properties:
+        model_name:
+          type: string
+          description: Name of the currently loaded model
+          example: "t5"
+        model_version:
+          type: string
+          description: Version of the model (if available)
+          example: "0.2.3"
+        languages:
+          type: array
+          description: Supported languages for summarization
+          items:
+            type: string
+          example: ["de", "en"]
+        device:
+          type: string
+          description: Device used for inference (if available)
+          example: "cpu"
+        runtime:
+          type: string
+          description: Runtime/framework (if available)
+          example: "transformers"
+
+    Error:
+      type: object
+      additionalProperties: false
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+          example: "Missing required field: text"
+        details:
+          type: string
+          description: Additional error details (optional)
+          example: "The 'text' field is required and cannot be empty"
+
+
+tags:
+  - name: NLP
+    description: Natural Language Processing operations
+  - name: System
+    description: System health and information endpoints
