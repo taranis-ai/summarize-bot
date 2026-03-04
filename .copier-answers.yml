@@ -1,0 +1,8 @@
+# DO NOT CHANGE -> WILL BREAK copier LOGIC
+_commit: v0.9.8
+_src_path: https://github.com/taranis-ai/bot_template
+author_mail: benjamin.akhras@ait.ac.at
+description: Bot for summarizing stories in Taranis AI
+models: t5, bart, pegasus
+project_name: summarize_bot
+repo_url: https://github.com/taranis-ai/summarize-bot

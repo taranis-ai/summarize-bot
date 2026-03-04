@@ -3,7 +3,8 @@ FROM python:3.13-slim AS builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app/
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
+# install common packages
+RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends -y \
     build-essential \
     python3-dev \
     git
@@ -41,7 +42,7 @@ ENV GRANIAN_LOG_ACCESS_ENABLED=1
 ENV MODEL=${MODEL}
 
 # bake models in to the image
-RUN python -c 'from summarize_bot.predictor_factory import PredictorFactory; PredictorFactory()'
+RUN python -c 'from summarize_bot.config import Config; from taranis_base_bot.misc import get_model; get_model(Config)'
 
 EXPOSE 8000
 

@@ -1,0 +1,11 @@
+services:
+  summarize_bot:
+    image: ghcr.io/taranis-ai/taranis-summarize-bot:latest
+    environment:
+      DEBUG: "${DEBUG:-False}"
+      MODEL: "${MODEL:-t5}"
+      API_KEY: "${API_KEY:-testkey}"
+      # add additional env vars
+    ports:
+      - "${BOT_PORT:-5500}:8000"
+    restart: unless-stopped

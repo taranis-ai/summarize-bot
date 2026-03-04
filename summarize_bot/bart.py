@@ -1,14 +1,12 @@
-from transformers import pipeline, T5Tokenizer
-from summarize_bot.predictor import Predictor
+from transformers import pipeline
 from summarize_bot.config import Config
 
 
-class T5Summarize(Predictor):
-    model_name = "deutsche-telekom/mt5-small-sum-de-en-v1"
+class Bart:
+    model_name = "facebook/bart-large-cnn"
 
     def __init__(self):
-        tokenizer = T5Tokenizer.from_pretrained(self.model_name, legacy=True)
-        self.summarizer = pipeline("summarization", model=self.model_name, tokenizer=tokenizer)
+        self.summarizer = pipeline("summarization", model=self.model_name)
 
     async def predict(self, text: str) -> str:
         if not text:

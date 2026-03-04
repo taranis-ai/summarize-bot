@@ -1,9 +1,8 @@
 from transformers import PegasusTokenizer, PegasusForConditionalGeneration
-from summarize_bot.predictor import Predictor
 from summarize_bot.config import Config
 
 
-class PegasusSummarize(Predictor):
+class Pegasus:
     model_name = "google/pegasus-xsum"
 
     def __init__(self):
