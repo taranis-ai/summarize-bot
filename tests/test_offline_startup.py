@@ -31,7 +31,7 @@ def _payload_from_schema(schema: dict[str, dict]) -> dict[str, object]:
 async def test_app_starts_and_serves_without_network(monkeypatch):
     class FakeModel:
         async def predict(self, **kwargs):
-            return {"status": "ok"}
+            return {"summary": "offline startup test text"}
 
     monkeypatch.setenv("HF_HUB_OFFLINE", "1")
     monkeypatch.setenv("TRANSFORMERS_OFFLINE", "1")
@@ -58,4 +58,5 @@ async def test_app_starts_and_serves_without_network(monkeypatch):
 
     response_json = await inference_response.get_json()
     assert isinstance(response_json, dict)
-    assert response_json
+    assert set(response_json) == {"summary"}
+    assert isinstance(response_json["summary"], str)
