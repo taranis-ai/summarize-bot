@@ -8,12 +8,12 @@ class Bart:
     def __init__(self):
         self.summarizer = pipeline("summarization", model=self.model_name)
 
-    async def predict(self, text: str) -> str:
+    async def predict(self, text: str) -> dict[str, str]:
         if not text:
             raise ValueError("No text to summarize.")
 
         if len(text) < Config.MAX_LEN:
-            return text
+            return {"summary": text}
 
         summary = self.summarizer(
             text,
@@ -24,5 +24,5 @@ class Bart:
         )
 
         if isinstance(summary, list) and summary:
-            return summary[0]["summary_text"]
+            return {"summary": summary[0]["summary_text"]}
         raise ValueError("Summarization failed or returned an unexpected result.")
