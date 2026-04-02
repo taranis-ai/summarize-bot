@@ -16,7 +16,8 @@ dependencies = [
     "transformers",
     "torch",
     "protobuf",
-    "sentencepiece"
+    "sentencepiece",
+    "httpx",
 ]
 dynamic = ["version"]
 
