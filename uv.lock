@@ -865,6 +865,7 @@ wheels = [
 name = "summarize-bot"
 source = { editable = "." }
 dependencies = [
+    { name = "httpx" },
     { name = "protobuf" },
     { name = "sentencepiece" },
     { name = "taranis-base-bot" },
@@ -882,6 +883,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "httpx" },
     { name = "protobuf" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "pytest-asyncio", marker = "extra == 'dev'" },
